@@ -1,0 +1,18 @@
+
+src/main/resources
+
+
+target/
+project/target
+project/project/target
+.idea
+*.MF
+classes
+
+### user files
+*.pdf
+*.html
+mave
+
+### macOS template
+*.DS_Store
