@@ -178,6 +178,7 @@ object DruidUtil {
     executeBatch(getConnection(),insertSql)(tenRecords)
 
 
+
     val func = (rs: Option[ResultSet]) => {
 
       var res: Seq[String] = Seq()
@@ -187,6 +188,7 @@ object DruidUtil {
           while(result.next()) {
               val appId = result.getString("appid")
               result.getString("expid")
+
               result.getInt("n")
 
             res = res :+ appId
