@@ -12,9 +12,11 @@ object FileConfig {
 
   val combinedConfig: Config = fileConf.withFallback(default)
 
-  val mysqlConfig: Config = combinedConfig.getConfig("mysql")
+  val mysqlConfig: Config = combinedConfig.getConfig("oracle")
 
-  print("mysql ")
+  val indexTables = combinedConfig.getStringList("index")
+
+  print("oracle ")
   printConf(mysqlConfig)
   def printConf(config: Config): Unit = println(config.root()
     .render(ConfigRenderOptions.concise().setFormatted(true).setJson(true)))
