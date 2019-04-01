@@ -5,6 +5,8 @@ import java.sql.{Connection, PreparedStatement, ResultSet, SQLException}
 import com.alibaba.druid.pool.DruidDataSource
 import org.slf4j.LoggerFactory
 
+import scala.collection.mutable.Map
+
 object DruidUtil {
 
   private val logger = LoggerFactory.getLogger(getClass)
@@ -30,10 +32,11 @@ object DruidUtil {
       * 用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'。
       * 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会起作用
       */
-    dataSource.setValidationQuery("SELECT 'x'")
-    dataSource.setTestWhileIdle(true)
-    dataSource.setTestOnBorrow(false)
-    dataSource.setTestOnReturn(false)
+//    dataSource.setValidationQuery("SELECT 'x' FROM DUAL")
+//    dataSource.setTestWhileIdle(true)
+//    dataSource.setTestOnBorrow(false)
+//    dataSource.setTestOnReturn(false)
+    dataSource.setTestWhileIdle(false)
 
     dataSource.setPoolPreparedStatements(false)
     dataSource.setMaxPoolPreparedStatementPerConnectionSize(10)
@@ -51,7 +54,9 @@ object DruidUtil {
 
 
 
-  def getConnection(): Option[Connection] = {
+  def getConnection(url: String, driverClassName: String, username: String, password: String): Option[Connection] = {
+    initDataSource(url, driverClassName, username, password)
+
     try {
       Some(dataSource.getConnection)
     } catch {
@@ -95,11 +100,6 @@ object DruidUtil {
         exp.printStackTrace()
         logger.info(exp.toString)
         function(None)
-    }finally {
-      connection match {
-        case Some(conn) => close(connection.get)
-        case None =>
-      }
     }
   }
 
@@ -116,11 +116,6 @@ object DruidUtil {
       case exp: Exception =>
         exp.printStackTrace()
         logger.info(exp.toString)
-    }finally {
-      connection match {
-        case Some(conn) => close(connection.get)
-        case None =>
-      }
     }
   }
 
@@ -141,18 +136,13 @@ object DruidUtil {
         logger.info(sqlExp.toString)
         function(None)
 
-    }finally {
-      connection match {
-        case Some(conn) => close(connection.get)
-        case None =>
-      }
     }
 
   }
 
   def main(args: Array[String]): Unit = {
 
-    initDataSource("", "", "","")
+    val connection = getConnection("", "", "","")
 
     val insertSql = "INSERT INTO APP.PARTSUPP VALUES(?, ?, ?, ?)"
 
@@ -175,30 +165,53 @@ object DruidUtil {
         case None =>
       }
     }
-    executeBatch(getConnection(),insertSql)(tenRecords)
+    executeBatch(Some(connection.get),insertSql)(tenRecords)
 
 
 
-    val func = (rs: Option[ResultSet]) => {
+    val add2Map = (rs: Option[ResultSet]) => {
 
-      var res: Seq[String] = Seq()
-
+      val map = Map.empty[String, Any]
       rs match {
         case Some(result) =>
-          while(result.next()) {
-              val appId = result.getString("appid")
-              result.getString("expid")
-
-              result.getInt("n")
-
-            res = res :+ appId
+          while (result.next()) {
+            val name = result.getString("index_database")
+            //              val age = result.getInt("TRIGGER_GROUP")
+            val age = result.getString("index_table")
+            map += (name -> age)
           }
+          map
+        case None => map
+      }
+    }
 
+    val add2List = (rs: Option[ResultSet]) => {
+
+      var res: Seq[String] = Seq()
+      rs match {
+        case Some(result) =>
+          while (result.next()) {
+            val table = result.getString("index_table")
+            res = res :+ table
+          }
           res
         case None => res
       }
     }
-    execQuery(getConnection(), "select * from t1")(func)
+
+    val sql = ""
+
+    execQuery(Some(dataSource.getConnection()), sql)(add2Map).foreach {
+      case (k, v) =>
+        println(k)
+        println(v)
+    }
+
+    execQuery(Some(dataSource.getConnection()), sql)(add2List).foreach {
+      println(_)
+    }
+
+    close(connection.get)
 
   }
 
