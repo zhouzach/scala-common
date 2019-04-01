@@ -38,6 +38,7 @@ object DruidUtil {
 //    dataSource.setTestOnReturn(false)
     dataSource.setTestWhileIdle(false)
 
+
     dataSource.setPoolPreparedStatements(false)
     dataSource.setMaxPoolPreparedStatementPerConnectionSize(10)
 

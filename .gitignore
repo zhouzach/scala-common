@@ -1,6 +1,6 @@
 
 src/main/resources
-src/test/scala
+src/test/resources
 
 
 target/
