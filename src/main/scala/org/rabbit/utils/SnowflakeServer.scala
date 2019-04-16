@@ -63,6 +63,7 @@ object SnowflakeConf {
 class SnowflakeIdGenerator(val workerId: Long) {
 
   private val datacenterId = 0
+
   /** 开始时间截 (2019-01-01) */
   private val twepoch: Long = 1546300800000L
 
