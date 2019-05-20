@@ -2,7 +2,7 @@ package org.rabbit.string
 
 import java.util.regex.Pattern
 
-object Regex {
+object SpecialCharacters {
 
   /**
     *
