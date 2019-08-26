@@ -105,14 +105,34 @@ object DateUtil {
     dates
   }
 
+  def getYear(date: String): Int ={
+    LocalDate.parse(date).getYear
+
+  }
+
+  def getMonth(date: String): Int ={
+    LocalDate.parse(date).getMonthOfYear
+
+  }
+  def getDay(date: String): Int ={
+    LocalDate.parse(date).getDayOfMonth
+
+  }
+
   def main(args: Array[String]): Unit = {
-    getDaysBetweenDate("2018-01-06", "2018-01-07").foreach(println(_))
+//    getDaysBetweenDate("2018-01-06", "2018-01-07").foreach(println(_))
+//
+//    println()
+//    getMonthsBetweenDate("2018-01", "2018-04").foreach(println(_))
+//
+//    println()
+//    getYearsBetweenDate("2016-10-20", "2018-04-10").foreach(println(_))
 
-    println()
-    getMonthsBetweenDate("2018-01", "2018-04").foreach(println(_))
+    val date ="2016-07-02"
 
-    println()
-    getYearsBetweenDate("2016-10-20", "2018-04-10").foreach(println(_))
+    println(getYear(date))
+    println(getMonth(date))
+    println(getDay(date))
 
   }
 
