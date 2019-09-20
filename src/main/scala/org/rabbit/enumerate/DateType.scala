@@ -182,6 +182,9 @@ object DateUtil {
 
   def main(args: Array[String]): Unit = {
 
+    println(Integer.parseInt("null"))
+//    val m =new DateTime("2018-01-31").plusMonths(0)
+//    println(m)
     //    val b = "20182".substring(4)
     //    val i = Integer.parseInt(b)
     //
@@ -191,7 +194,7 @@ object DateUtil {
     //
     //    (i to ei).foreach(println(_))
 
-    getDates("quarter", "20183", "20183").foreach(println(_))
+//    getDates("quarter", "20183", "20183").foreach(println(_))
     //     val ww= LocalDate.parse("2018-03-31").toString("yyyy-ww")
     //    println(ww)
 

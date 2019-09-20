@@ -15,7 +15,7 @@ object DateUtil {
       case DayType.DAY =>
         getDaysBetweenDate(begin, end)
       case DayType.MONTH =>
-        getMonthsBetweenDate(begin, end)
+        getMonthsBetweenDate(begin, end, "YYYY-MM")
       case DayType.YEAR =>
         getYearsBetweenDate(begin, end)
       case _ => Seq.empty
@@ -58,7 +58,7 @@ object DateUtil {
     * @param end   格式必须为'2018-01-25'
     * @return
     */
-  def getMonthsBetweenDate(begin: String, end: String) = {
+  def getMonthsBetweenDate(begin: String, end: String, format: String) = {
     var dates: Seq[String] = Seq.empty
 
     val beginDate = LocalDate.parse(begin).withDayOfMonth(1)
@@ -67,11 +67,11 @@ object DateUtil {
     val months = Months.monthsBetween(beginDate, endDate).getMonths
 
     if (months >= 0) {
-      val beginMonth = beginDate.toString("yyyy-MM")
+      val beginMonth = beginDate.toString(format)
       dates = dates :+ String.valueOf(beginMonth)
 
       (1 to months).foreach { month =>
-        dates = dates :+ String.valueOf(beginDate.plusMonths(month).toString("yyyy-MM"))
+        dates = dates :+ String.valueOf(beginDate.plusMonths(month).toString(format))
       }
     }
 
@@ -106,13 +106,13 @@ object DateUtil {
   }
 
   def main(args: Array[String]): Unit = {
-    getDaysBetweenDate("2018-01-06", "2018-01-07").foreach(println(_))
+//    getDaysBetweenDate("2018-01-06", "2018-01-07").foreach(println(_))
 
     println()
-    getMonthsBetweenDate("2018-01", "2018-04").foreach(println(_))
+    getMonthsBetweenDate("2018-01-31", "2018-04-30", "YYYY-MM-dd").foreach(println(_))
 
     println()
-    getYearsBetweenDate("2016-10-20", "2018-04-10").foreach(println(_))
+//    getYearsBetweenDate("2016-10-20", "2018-04-10").foreach(println(_))
 
   }
 

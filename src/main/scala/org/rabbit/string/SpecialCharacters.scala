@@ -21,8 +21,13 @@ object SpecialCharacters {
   }
 
   def main(args: Array[String]): Unit = {
-    split("db.table")
-      .foreach(println(_))
+//    split("db.table")
+//      .foreach(println(_))
+    val s = "[" + 2 + "," + 3
+    println(s)
+
+    val s1 = "[" + "a" + "," + "b"
+    println(s1)
   }
 
 }
