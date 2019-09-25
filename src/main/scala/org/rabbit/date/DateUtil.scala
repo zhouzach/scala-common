@@ -24,12 +24,12 @@ object DateUtil {
 
 
   /**
-    * 获取两个日期间隔的所有日期
-    *
-    * @param start 格式必须为'2018-01-25'
-    * @param end   格式必须为'2018-01-25'
-    * @return
-    */
+   * 获取两个日期间隔的所有日期
+   *
+   * @param start 格式必须为'2018-01-25'
+   * @param end   格式必须为'2018-01-25'
+   * @return
+   */
   def getDaysBetweenDate(begin: String, end: String) = {
     var dates: Seq[String] = Seq.empty
 
@@ -52,12 +52,12 @@ object DateUtil {
 
 
   /**
-    * 获取两个日期间隔的所有月份
-    *
-    * @param start 格式必须为'2018-01-25'
-    * @param end   格式必须为'2018-01-25'
-    * @return
-    */
+   * 获取两个日期间隔的所有月份
+   *
+   * @param start 格式必须为'2018-01-25'
+   * @param end   格式必须为'2018-01-25'
+   * @return
+   */
   def getMonthsBetweenDate(begin: String, end: String, format: String) = {
     var dates: Seq[String] = Seq.empty
 
@@ -79,12 +79,12 @@ object DateUtil {
   }
 
   /**
-    * 获取两个日期间隔的所有年份
-    *
-    * @param start 格式必须为'2018-01-25'
-    * @param end   格式必须为'2018-01-25'
-    * @return
-    */
+   * 获取两个日期间隔的所有年份
+   *
+   * @param start 格式必须为'2018-01-25'
+   * @param end   格式必须为'2018-01-25'
+   * @return
+   */
   def getYearsBetweenDate(begin: String, end: String) = {
     var dates: Seq[String] = Seq.empty
 
@@ -106,8 +106,9 @@ object DateUtil {
   }
 
   def formateDate(date: String) = {
-    val dt = new DateTime(date).toString("yyyy-MM-dd")
-    new DateTime(date).toString("yyyy-MM-dd HH:mm:ss")
+    //    val dt = LocalDate.parse(date).toString("yyyy-MM-dd HH:mm:ss")
+    new DateTime(date).toString("yyyy-MM-dd")
+    val dt = new DateTime(date).toString("yyyy-MM-dd HH:mm:ss")
     println(dt)
   }
 
@@ -163,12 +164,12 @@ object DateUtil {
   }
 
   def main(args: Array[String]): Unit = {
+    val date = "2018"
     //    getDaysBetweenDate("2018-01-06", "2018-01-07").foreach(println(_))
 
-    println()
-    getMonthsBetweenDate("2018-01-31", "2018-04-30", "YYYY-MM-dd").foreach(println(_))
+    formateDate(date)
+    //    getMonthsBetweenDate("2018-01-31", "2018-04-30", "YYYY-MM-dd").foreach(println(_))
 
-    println()
     //    getYearsBetweenDate("2016-10-20", "2018-04-10").foreach(println(_))
   }
 
