@@ -121,7 +121,7 @@ object DruidUtil {
   }
 
 
-  def executeBatch[T](connection: Option[Connection], insertSql: String)(function: Option[PreparedStatement] => T) = {
+  def executeBatchInsert[T](connection: Option[Connection], insertSql: String)(function: Option[PreparedStatement] => T) = {
 
     try {
       if(connection.nonEmpty) {
@@ -166,7 +166,7 @@ object DruidUtil {
         case None =>
       }
     }
-    executeBatch(Some(connection.get),insertSql)(tenRecords)
+    executeBatchInsert(Some(connection.get),insertSql)(tenRecords)
 
 
 
